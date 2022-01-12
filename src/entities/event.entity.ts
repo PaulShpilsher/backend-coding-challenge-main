@@ -21,4 +21,7 @@ export class Event {
     
     @ManyToOne(() => Organizer, organizer => organizer.events)
     organizer: Organizer;
+
+    // TODO: future feature
+    attendees = [];
 }

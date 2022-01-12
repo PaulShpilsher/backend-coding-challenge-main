@@ -1,17 +1,31 @@
-import { getRepository } from "typeorm"
 import { Event } from "../entities/event.entity"
-import { Organizer } from "../entities/organizer.entity";
-import { getConnection } from "./connection";
+import { getDbConnection } from "./connection";
 
 
 
 export const readEvent = async (id: number): Promise<Event | undefined> => {
-    const connection = await getConnection();
+    const connection = await getDbConnection();
     const repository = connection.getRepository(Event);
-    const x = await repository
+    return await repository
         .createQueryBuilder("event")
         .innerJoinAndSelect("event.organizer", "organizer")
         .where("event.id = :id", {id})
         .getOne();
-    return x;
 }
+
+export const readEvents = async (from: number, until: number): Promise<Event[]> => {
+    const connection = await getDbConnection();
+    const repository = connection.getRepository(Event);
+    let query = await repository
+        .createQueryBuilder("event")
+        .innerJoinAndSelect("event.organizer", "organizer")
+        .where("event.date >= :from", {from});
+
+    if(!!until) {
+        query = query
+            .andWhere("event.date < :until", {until});
+    }
+
+    return query.getMany();
+}
+

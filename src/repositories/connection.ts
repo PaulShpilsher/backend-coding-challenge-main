@@ -1,5 +1,5 @@
 import path from "path";
-import { ConnectionOptions , createConnection} from "typeorm";
+import { Connection, ConnectionOptions , createConnection} from "typeorm";
 import { Event } from "../entities/event.entity";
 import { Organizer } from "../entities/organizer.entity";
 
@@ -10,5 +10,11 @@ const options: ConnectionOptions = {
     logging: true
 };
 
+let db: Connection;
 
-export const getConnection = async () => await createConnection(options);
+export const getDbConnection = async () => {
+    if(!db) {
+        db = await createConnection(options);
+    }
+    return db;
+}

@@ -2,6 +2,7 @@ import express from "express"
 import {Server} from "http";
 import { getEvent, getEvents } from "./controllers/events.controller";
 import "reflect-metadata";
+import { getDbConnection } from "./repositories/connection";
 
 const sleep = (ms: number): Promise<void> => new Promise((res) => setTimeout(res, ms))
 
@@ -9,8 +10,7 @@ export const start = async (): Promise<Server> => new Promise(async (resolve, re
     try {
         const port = 4040
         const app = express()
-        //getDBConnection();
-
+        await getDbConnection();
         const router = express.Router();
         app.use(router);
 
