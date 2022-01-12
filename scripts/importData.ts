@@ -99,7 +99,7 @@ const insertEvents = (db: Database, events: Event[]) => {
                         const organizerId = row.id;
 
                         db.run(
-                            `INSERT INTO EVENTS(name, isOutside, location, date, organizer_id)
+                            `INSERT INTO EVENTS(name, isOutside, location, date, organizerId)
                             VALUES(?,?,?,?,?)`,
                             [event.name, event.isOutside, event.location, event.date, organizerId],
                             function(err) {

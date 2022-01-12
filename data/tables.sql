@@ -9,6 +9,6 @@ CREATE TABLE IF NOT EXISTS events (
     isOutside INTEGER NOT NULL DEFAULT 0,
     location TEXT NOT NULL,
     date INTEGER NOT NULL,
-    organizer_id INTEGER NOT NULL,
-    FOREIGN KEY(organizer_id) REFERENCES organizers(id)
+    organizerId INTEGER NOT NULL,
+    FOREIGN KEY(organizerId) REFERENCES organizers(id)
 );
