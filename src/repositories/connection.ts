@@ -5,7 +5,7 @@ import { Organizer } from "../entities/organizer.entity";
 
 const options: ConnectionOptions = {
     type: "sqlite",
-    database: path.resolve(__dirname, "../../data/myDb.db'"),
+    database: path.resolve(__dirname, "../../data/myDb.db"),
     entities: [ Organizer, Event ],
     logging: true
 };

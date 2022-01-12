@@ -9,9 +9,9 @@ export const readEvent = async (id: number): Promise<Event | undefined> => {
     const connection = await getConnection();
     const repository = connection.getRepository(Event);
     const x = await repository
-        .createQueryBuilder("e")
-        .innerJoinAndSelect("e.organizer", "organizer")
-        .andWhereInIds([id])
+        .createQueryBuilder("event")
+        .innerJoinAndSelect("event.organizer", "organizer")
+        .where("event.id = :id", {id})
         .getOne();
     return x;
 }

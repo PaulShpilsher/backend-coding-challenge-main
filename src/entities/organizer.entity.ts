@@ -2,7 +2,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Event } from "./event.entity";
 
-@Entity({name: "orgaizers"})
+@Entity({name: "organizers"})
 export class Organizer {
     @PrimaryGeneratedColumn()
     id: number;
@@ -10,6 +10,6 @@ export class Organizer {
     @Column({ unique: true })
     name: string;
 
-    @OneToMany(() => Event, event => event.orgaizer)
+    @OneToMany(() => Event, event => event.organizer)
     events: Event[];
 }

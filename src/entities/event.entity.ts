@@ -19,6 +19,6 @@ export class Event {
     @Column()
     date: number;
     
-    @ManyToOne(() => Organizer, orgaizer => orgaizer.events)
-    orgaizer: Organizer;
+    @ManyToOne(() => Organizer, organizer => organizer.events)
+    organizer: Organizer;
 }
