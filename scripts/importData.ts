@@ -83,39 +83,33 @@ const loadEvents = (): Event[] => {
 
 const insertEvents = (db: Database, events: Event[]) => {
 
-    db.serialize(() => {
-        events.forEach((event: Event) => {
-            db.run(
-                "INSERT INTO organizers(name) VALUES(?)",
-                [event.organizer.name], 
-                function(err) {
-                    //ignore
-                });
+    events.forEach((event: Event) => {
+        db.run(
+            "INSERT INTO organizers(name) VALUES(?)",
+            [event.organizer.name], 
+            function(err) {
+                db.get(
+                    "SELECT id FROM organizers WHERE name = ?",
+                    [event.organizer.name], 
+                    (err, row) => {
+                        if (err) {
+                            throw err;
+                        }            
+                        
+                        const organizerId = row.id;
 
-            let organizerId;
-            db.get(
-                "SELECT id FROM organizers WHERE name = ?",
-                [event.organizer.name], 
-                (err, row) => {
-                    if (err) {
-                        throw err;
-                    }            
-                    
-                    console.log( row.id, row.name);
-                    organizerId = row.id;
+                        db.run(
+                            `INSERT INTO EVENTS(name, isOutside, location, date, organizer_id)
+                            VALUES(?,?,?,?,?)`,
+                            [event.name, event.isOutside, event.location, event.date, organizerId],
+                            function(err) {
+                                if(err) {
+                                    throw err;
+                                }
+                            });
+                    });
                 });
-
-            db.run(
-                `INSERT INTO EVENTS(name, isOutside, location, date, organizer_id)
-                VALUES(?,?,?,?,?)`,
-                [event.name, event.isOutside, event.location, event.date, organizerId],
-                function(err) {
-                    if(err) {
-                        throw err;
-                    }
-                });
-            });
         });
-}
+}             
 
 importData();
