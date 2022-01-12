@@ -5,11 +5,11 @@ import { Event } from "./event.entity";
 @Entity({name: "orgaizers"})
 export class Organizer {
     @PrimaryGeneratedColumn()
-    id!: number;
+    id: number;
 
     @Column({ unique: true })
-    name!: string;
+    name: string;
 
     @OneToMany(() => Event, event => event.orgaizer)
-    events!: Event[];
+    events: Event[];
 }

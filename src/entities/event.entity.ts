@@ -5,20 +5,20 @@ import { Organizer } from "./organizer.entity";
 @Entity({name: "events"})
 export class Event {
     @PrimaryGeneratedColumn()
-    id!: number;
+    id: number;
 
     @Column({ unique: true })
     name!: string;
 
     @Column({default: false})
-    isOutside!: boolean;
+    isOutside: boolean;
     
     @Column()
-    location!: string;
+    location: string;
     
     @Column()
-    date!: number;
+    date: number;
     
     @ManyToOne(() => Organizer, orgaizer => orgaizer.events)
-    orgaizer!: Organizer;
+    orgaizer: Organizer;
 }

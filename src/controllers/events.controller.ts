@@ -1,5 +1,7 @@
 
 import { Request, Response, NextFunction } from 'express';
+import { Event } from '../entities/event.entity';
+import { readEvent } from '../repositories/event.repository';
 
 const isNumeric = (value: string)=> /^-?\d+$/.test(value);
 const parseDate = (value: string): number => isNumeric(value) ? Number.parseInt(value) : Date.parse(value);
@@ -40,9 +42,14 @@ export const getEvent  = async (req: Request, res: Response) => {
     }
     
     const eventId = Number.parseInt(req.params.id);
+    const event = await readEvent(eventId);
+    if(!event) {
+        return res.status(404).json({
+            message: `Event with ID ${event} not found`
+        });
+ 
+    }
     
-    return res.status(200).json({
-        eventId
-    });
+    return res.status(200).json(event);
 
 }
