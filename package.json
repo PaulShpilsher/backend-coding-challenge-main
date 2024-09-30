@@ -27,7 +27,7 @@
   "dependencies": {
     "@babel/preset-typescript": "^7.15.0",
     "@types/sqlite3": "^3.1.7",
-    "express": "^4.17.1",
+    "express": "^4.21.0",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.1.5",
     "typeorm": "^0.2.41"
